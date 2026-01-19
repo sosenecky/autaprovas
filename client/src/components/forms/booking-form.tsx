@@ -75,9 +75,17 @@ Detaily rezervace:
 S pozdravem,
 ${bookingData.fullName}`);
 
-    // Open email client with pre-filled content
-    // Note: Using window.location.href works better on some mobile browsers than window.open
-    window.location.href = `mailto:autaprovas@centrum.cz?subject=${emailSubject}&body=${emailBody}`;
+    // Create a temporary link element and click it - this is more reliable than window.location.href
+    // especially inside async handlers or when popups might be blocked
+    const mailtoLink = `mailto:autaprovas@centrum.cz?subject=${emailSubject}&body=${emailBody}`;
+    
+    const link = document.createElement('a');
+    link.href = mailtoLink;
+    link.target = '_blank'; // Sometimes helps with behavior
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
