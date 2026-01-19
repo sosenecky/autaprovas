@@ -40,52 +40,44 @@ export default function BookingForm() {
     },
   });
 
-  const onSubmit = (data: InsertBooking) => {
-    // 1. Open Email Client
-    sendEmail(data);
+  const onSubmit = async (data: InsertBooking) => {
+    try {
+      toast({
+        title: "Odesílám...",
+        description: "Prosím čekejte.",
+      });
 
-    // 2. Show Success Message
-    toast({
-      title: "Email připraven",
-      description: "Otevřeli jsme váš emailový klient. Prosím odešlete vygenerovanou zprávu pro dokončení poptávky.",
-      duration: 5000,
-    });
-    
-    // 3. Reset form
-    form.reset();
-  };
+      const response = await fetch("https://formsubmit.co/ajax/autaprovas@centrum.cz", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          ...data,
+          _subject: `Poptávka ${data.serviceType} - ${data.fullName}`,
+          _template: "table", // Makes the email look nicer
+          _captcha: "false"   // Disables captcha redirection
+        })
+      });
 
-  const sendEmail = (bookingData: InsertBooking) => {
-    // Create email content with booking details
-    const emailSubject = encodeURIComponent(`Poptávka ${bookingData.serviceType} - ${bookingData.fullName}`);
-    const emailBody = encodeURIComponent(`Dobrý den,
-
-chtěl(a) bych požádat o ${bookingData.serviceType}.
-
-Osobní údaje:
-- Jméno: ${bookingData.fullName}
-- Email: ${bookingData.email}
-- Telefon: ${bookingData.phone}
-
-Detaily rezervace:
-- Služba: ${bookingData.serviceType}
-- Preferované vozidlo: ${bookingData.vehiclePreference || "Jakékoliv dostupné"}
-- Datum vyzvednutí: ${bookingData.pickupDate}${bookingData.returnDate ? `\n- Datum vrácení: ${bookingData.returnDate}` : ""}${bookingData.specialRequests ? `\n- Speciální požadavky: ${bookingData.specialRequests}` : ""}
-
-S pozdravem,
-${bookingData.fullName}`);
-
-    // Create a temporary link element and click it - this is more reliable than window.location.href
-    // especially inside async handlers or when popups might be blocked
-    const mailtoLink = `mailto:autaprovas@centrum.cz?subject=${emailSubject}&body=${emailBody}`;
-    
-    const link = document.createElement('a');
-    link.href = mailtoLink;
-    link.target = '_blank'; // Sometimes helps with behavior
-    link.rel = 'noopener noreferrer';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      if (response.ok) {
+        toast({
+          title: "Poptávka odeslána!",
+          description: "Děkujeme za vaši rezervaci. Brzy se vám ozveme na uvedený email.",
+          duration: 5000,
+        });
+        form.reset();
+      } else {
+        throw new Error("Chyba při odesílání");
+      }
+    } catch (error) {
+      toast({
+        title: "Chyba při odesílání",
+        description: "Omlouváme se, něco se pokazilo. Zkuste to prosím znovu nebo nám napište přímo na autaprovas@centrum.cz",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
