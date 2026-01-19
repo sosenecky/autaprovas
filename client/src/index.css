@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+:root {
+  --background: 0 0% 0%; /* Black */
+  --foreground: 0 0% 100%; /* White */
+  --muted: 0 0% 10%; /* Charcoal */
+  --muted-foreground: 0 0% 65%; /* Gray-400 */
+  --popover: 0 0% 10%;
+  --popover-foreground: 0 0% 100%;
+  --card: 0 0% 10%; /* Charcoal */
+  --card-foreground: 0 0% 100%;
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --primary: 51 100% 50%; /* Luxury Gold */
+  --primary-foreground: 0 0% 0%; /* Black */
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 0 0% 15%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 51 100% 50%;
+  --radius: 0.5rem;
+  
+  /* Custom luxury colors */
+  --luxury-gold: 51 100% 50%; /* #FFD700 */
+  --charcoal: 0 0% 10%; /* #1A1A1A */
+  --pearl: 0 0% 97%; /* #F8F8F8 */
+}
+
+.dark {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 65%;
+  --popover: 0 0% 10%;
+  --popover-foreground: 0 0% 100%;
+  --card: 0 0% 10%;
+  --card-foreground: 0 0% 100%;
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --primary: 51 100% 50%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 0 0% 15%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 51 100% 50%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-luxury {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .luxury-gold {
+    color: hsl(var(--luxury-gold));
+  }
+
+  .bg-luxury-gold {
+    background-color: hsl(var(--luxury-gold));
+  }
+
+  .border-luxury-gold {
+    border-color: hsl(var(--luxury-gold));
+  }
+
+  .hover\:bg-luxury-gold:hover {
+    background-color: hsl(var(--luxury-gold));
+  }
+
+  .hover\:text-luxury-gold:hover {
+    color: hsl(var(--luxury-gold));
+  }
+
+  .text-charcoal {
+    color: hsl(var(--charcoal));
+  }
+
+  .bg-charcoal {
+    background-color: hsl(var(--charcoal));
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .glass-effect {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+  }
+
+  .luxury-gradient {
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--charcoal)) 100%);
+  }
+}
