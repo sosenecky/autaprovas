@@ -28,21 +28,16 @@ npm run dev
 ```
 Runs on http://localhost:5000
 
-## Deploy on Render.com:
+## Deploy on Vercel:
 
 ### 1. Upload to GitHub
-- Create repository: "autaprovas-website"
-- Upload all files from this COMPLETE_WEBSITE folder
+- Repository is synced.
 
-### 2. Render Configuration
+### 2. Vercel Configuration
+- **Framework Preset**: Vite
 - **Build Command**: `npm run build`
-- **Start Command**: `npm start`  
-- **Environment**: `NODE_ENV=production`
-- **Root Directory**: Leave empty
-
-### 3. Domain Setup
-- Get Render URL: `https://autaprovas-xyz.onrender.com`
-- Point autaprovas.com DNS to this URL
+- **Output Directory**: `dist`
+- **Install Command**: `npm install`
 
 ## Email System:
 Booking forms automatically open customer's email client with pre-filled messages to autaprovas@centrum.cz with all booking details.
