@@ -31,14 +31,11 @@ export default function VehicleCard({ vehicle, compact = false }: VehicleCardPro
 
   return (
     <Card className="bg-black border-gray-800 overflow-hidden group cursor-pointer hover:transform hover:scale-105 transition-all duration-300 flex flex-col h-full">
-      <div className="relative">
+      <div className="relative bg-charcoal/50 flex items-center justify-center">
         <img 
           src={vehicle.imageUrl} 
           alt={vehicle.name}
-          className={`w-full object-cover object-center ${compact ? 'h-48' : 'h-64'}`}
-          style={{ 
-            objectPosition: vehicle.name === 'Maserati Ghibli SQ4' ? '50% 60%' : '50% 30%' 
-          }}
+          className={`w-full object-contain ${compact ? 'h-48' : 'h-64'}`}
         />
         {vehicle.tag && (
           <Badge 
