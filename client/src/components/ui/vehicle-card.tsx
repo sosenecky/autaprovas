@@ -30,12 +30,12 @@ export default function VehicleCard({ vehicle, compact = false }: VehicleCardPro
   };
 
   return (
-    <Card className="bg-black border-gray-800 overflow-hidden group cursor-pointer hover:transform hover:scale-105 transition-all duration-300">
+    <Card className="bg-black border-gray-800 overflow-hidden group cursor-pointer hover:transform hover:scale-105 transition-all duration-300 flex flex-col h-full">
       <div className="relative">
         <img 
           src={vehicle.imageUrl} 
           alt={vehicle.name}
-          className={`w-full object-cover object-center ${compact ? 'h-48' : 'h-56'}`}
+          className={`w-full object-cover object-center ${compact ? 'h-48' : 'h-64'}`}
           style={{ 
             objectPosition: vehicle.name === 'Maserati Ghibli SQ4' ? '50% 60%' : '50% 30%' 
           }}
@@ -48,11 +48,11 @@ export default function VehicleCard({ vehicle, compact = false }: VehicleCardPro
           </Badge>
         )}
       </div>
-      <CardContent className="p-6">
-        <h3 className="text-2xl font-semibold mb-4 text-white">{vehicle.name}</h3>
+      <CardContent className="p-6 flex flex-col flex-grow">
+        <h3 className="text-2xl font-semibold mb-4 text-white min-h-[4rem] flex items-center">{vehicle.name}</h3>
         
         {!compact && (
-          <div className="grid grid-cols-3 gap-4 mb-4 text-sm">
+          <div className="grid grid-cols-3 gap-4 mb-6 text-sm">
             <div className="text-center">
               <div className="text-luxury-gold font-semibold">{vehicle.horsepower}</div>
               <div className="text-gray-400">HP</div>
@@ -68,8 +68,8 @@ export default function VehicleCard({ vehicle, compact = false }: VehicleCardPro
           </div>
         )}
         
-        <div className="flex justify-center">
-          <Link href="/booking">
+        <div className="mt-auto flex justify-center">
+          <Link href="/booking" className="w-full">
             <Button className="bg-luxury-gold text-black hover:bg-yellow-500 font-semibold transition-colors w-full">
               Rezervovat
             </Button>
