@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { insertBookingSchema, type InsertBooking } from "@shared/schema";
-import { apiRequest } from "@/lib/queryClient";
 
 const serviceTypes = [
   { value: "Luxusní půjčování", label: "Luxusní půjčování" },
@@ -28,7 +25,6 @@ const vehiclePreferences = [
 
 export default function BookingForm() {
   const { toast } = useToast();
-  const queryClient = useQueryClient();
   
   const form = useForm<InsertBooking>({
     resolver: zodResolver(insertBookingSchema),
@@ -44,31 +40,19 @@ export default function BookingForm() {
     },
   });
 
-  const createBookingMutation = useMutation({
-    mutationFn: async (data: InsertBooking) => {
-      const response = await apiRequest("POST", "/api/bookings", data);
-      return response.json();
-    },
-    onSuccess: () => {
-      toast({
-        title: "Poptávka odeslána!",
-        description: "Váš emailový klient byl otevřen s předvyplněnou zprávou. Odešlete email pro dokončení poptávky.",
-      });
-      queryClient.invalidateQueries({ queryKey: ["/api/bookings"] });
-      form.reset();
-    },
-    onError: (error) => {
-      toast({
-        title: "Chyba při odesílání",
-        description: error.message || "Došlo k chybě při odesílání poptávky. Zkuste to prosím znovu.",
-        variant: "destructive",
-      });
-    },
-  });
-
   const onSubmit = (data: InsertBooking) => {
-    createBookingMutation.mutate(data);
+    // 1. Open Email Client
     sendEmail(data);
+
+    // 2. Show Success Message
+    toast({
+      title: "Email připraven",
+      description: "Otevřeli jsme váš emailový klient. Prosím odešlete vygenerovanou zprávu pro dokončení poptávky.",
+      duration: 5000,
+    });
+    
+    // 3. Reset form
+    form.reset();
   };
 
   const sendEmail = (bookingData: InsertBooking) => {
@@ -92,8 +76,8 @@ S pozdravem,
 ${bookingData.fullName}`);
 
     // Open email client with pre-filled content
-    const mailtoLink = `mailto:autaprovas@centrum.cz?subject=${emailSubject}&body=${emailBody}`;
-    window.open(mailtoLink);
+    // Note: Using window.location.href works better on some mobile browsers than window.open
+    window.location.href = `mailto:autaprovas@centrum.cz?subject=${emailSubject}&body=${emailBody}`;
   };
 
   return (
@@ -277,13 +261,12 @@ ${bookingData.fullName}`);
             <div className="md:col-span-2 text-center">
               <Button
                 type="submit"
-                disabled={createBookingMutation.isPending}
                 className="bg-luxury-gold text-black px-12 py-4 text-lg font-semibold hover:bg-yellow-500 transition-colors duration-300"
               >
-                {createBookingMutation.isPending ? "Odesílání..." : "Odeslat poptávku"}
+                Odeslat poptávku
               </Button>
               <p className="text-gray-400 text-sm mt-4">
-                Ozveme se vám do 24 hodin pro potvrzení vaší rezervace
+                Po kliknutí se otevře váš emailový klient s předvyplněnou zprávou.
               </p>
             </div>
           </form>
