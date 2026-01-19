@@ -1,14 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import VehicleCard from "@/components/ui/vehicle-card";
-import { Vehicle } from "@shared/schema";
+import { vehicles } from "@/lib/data";
 
 export default function Fleet() {
-  const { data: vehicles, isLoading } = useQuery<Vehicle[]>({
-    queryKey: ["/api/vehicles"],
-  });
-
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
@@ -30,23 +25,15 @@ export default function Fleet() {
       {/* Vehicle Section */}
       <section className="py-12 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <div key={index} className="bg-charcoal rounded-xl h-96 animate-pulse"></div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {vehicles?.map((vehicle, index) => (
-                <div key={vehicle.id} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <VehicleCard vehicle={vehicle} />
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {vehicles.map((vehicle, index) => (
+              <div key={vehicle.id} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                <VehicleCard vehicle={vehicle} />
+              </div>
+            ))}
+          </div>
 
-          {!isLoading && vehicles?.length === 0 && (
+          {vehicles.length === 0 && (
             <div className="text-center py-16">
               <p className="text-gray-400 text-xl">Momentálně nejsou k dispozici žádná vozidla.</p>
             </div>
