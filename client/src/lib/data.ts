@@ -1,0 +1,72 @@
+import { Vehicle } from "@shared/schema";
+
+export const vehicles: Vehicle[] = [
+  {
+    id: 1,
+    name: "Aston Martin DB11 V12",
+    brand: "Aston Martin",
+    model: "DB11 V12",
+    year: 2024,
+    category: "Sports Car",
+    pricePerDay: "1400.00",
+    horsepower: 630,
+    zeroToSixty: "3.9",
+    topSpeed: 335,
+    imageUrl: "/attached_assets/0N4A6816.jpeg",
+    features: ["Twin-Turbo V12", "Aeroblade Technology", "Handcrafted Interior", "Active Suspension"],
+    isAvailable: true,
+    description: "Elegant grand touring with unmistakable British luxury and V12 power.",
+    tag: "Luxury"
+  },
+  {
+    id: 2,
+    name: "Ferrari 812 GTS",
+    brand: "Ferrari",
+    model: "812 GTS",
+    year: 2024,
+    category: "Convertible",
+    pricePerDay: "2200.00",
+    horsepower: 800,
+    zeroToSixty: "2.9",
+    topSpeed: 340,
+    imageUrl: "/attached_assets/IMG_4251.jpeg",
+    features: ["Naturally Aspirated V12", "Retractable Hardtop", "F1-Derived Technology", "Launch Control"],
+    isAvailable: true,
+    description: "The pinnacle of Ferrari's front-engined V12 convertible excellence.",
+    tag: "Premium"
+  },
+  {
+    id: 3,
+    name: "Mercedes AMG GT S",
+    brand: "Mercedes-AMG",
+    model: "GT S",
+    year: 2024,
+    category: "Sports Car",
+    pricePerDay: "1600.00",
+    horsepower: 515,
+    zeroToSixty: "3.9",
+    topSpeed: 311,
+    imageUrl: "/attached_assets/IMG_4141.jpeg",
+    features: ["Handcrafted AMG V8", "AMG DYNAMIC SELECT", "Active Aerodynamics", "Race-Derived Suspension"],
+    isAvailable: true,
+    description: "German engineering meets race-bred performance in this AMG masterpiece.",
+    tag: "Performance"
+  },
+  {
+    id: 4,
+    name: "Maserati Ghibli SQ4",
+    brand: "Maserati",
+    model: "Ghibli SQ4",
+    year: 2024,
+    category: "Luxury Sedan",
+    pricePerDay: "1100.00",
+    horsepower: 424,
+    zeroToSixty: "4.9",
+    topSpeed: 286,
+    imageUrl: "/attached_assets/IMG_0204.jpeg",
+    features: ["Twin-Turbo V6", "Q4 All-Wheel Drive", "Skyhook Suspension", "Luxury Interior"],
+    isAvailable: true,
+    description: "Italian luxury sedan with distinctive style and engaging performance.",
+    tag: "Luxury"
+  }
+];
